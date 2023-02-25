@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express')
+const pool = require('./config/database') // ahora se ejecuta el poll y debería ssalir db is connected
 
 const app = express()
 
