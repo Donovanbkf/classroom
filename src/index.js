@@ -17,6 +17,7 @@ app.use(express.json()) // para postman JSON hace que funcione ¿?
 app.use(express.urlencoded({ extended: true})) // para los form hace que funcione ¿? y son true elimina el [Object: null prototype] { } 
 
 //routes
+app.use('/auth',require('./routes/auth')) 
 app.use(require('./routes/')) 
-// app.use(require('./routes/authentication')) 
+
 // app.use(require('./routes/links'))
