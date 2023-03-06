@@ -28,3 +28,4 @@ CREATE TABLE skills (
 -- );
 
 DESCRIBE links;
+ 
