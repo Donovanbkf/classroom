@@ -24,5 +24,6 @@ CREATE TABLE notas (
     nota FLOAT(10)
 );
 
-DESCRIBE links;
- 
+DESCRIBE user;
+DESCRIBE asignature;
+DESCRIBE notas;
