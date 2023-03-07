@@ -18,9 +18,11 @@ CREATE TABLE asignature (
 );
 
 CREATE TABLE notas (
-    user_id INTEGER(11) FOREIGN Key(user_id) REFERENCES user(id),
-    asignature_id INTEGER(11) FOREIGN KEY (asignature_id) REFERENCES asignature(id),
-    estado ENUM('en curso','terminada') NOT NULL,
+    user_id INTEGER(11) NOT NULL, 
+    asignature_id INTEGER(11) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (asignature_id) REFERENCES asignature(id),
+    estado ENUM('en curso','finalizada') NOT NULL,
     nota FLOAT(10)
 );
 
