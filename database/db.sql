@@ -11,21 +11,18 @@ CREATE TABLE user (
     role ENUM('alumno','profesor','admin') NOT NULL
 );
 
-CREATE TABLE skills (
+CREATE TABLE asignature (
     id INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     skill ENUM('mates', 'castellano', 'ingles', 'valenciano', 'fisica', 'quimica', 'informatica') NOT NULL,
     description TEXT
 );
 
--- CREATE TABLE links (
---     id INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
---     title VARCHAR(150) NOT NULL,
---     url VARCHAR(255) NOT NULL,
---     description TEXT,
---     user_id INTEGER(11),
---     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user(id) 
--- );
+CREATE TABLE notas (
+    user_id INTEGER(11) FOREIGN Key(user_id) REFERENCES user(id),
+    asignature_id INTEGER(11) FOREIGN KEY (asignature_id) REFERENCES asignature(id),
+    estado ENUM('en curso','terminada') NOT NULL,
+    nota FLOAT(10)
+);
 
 DESCRIBE links;
  
