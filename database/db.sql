@@ -8,13 +8,16 @@ CREATE TABLE user (
     username VARCHAR(16) NOT NULL,
     password VARCHAR(60) NOT NULL,
     fullname VARCHAR(100) NOT NULL,
-    role ENUM('alumno','profesor','admin') NOT NULL
+    role ENUM('alumno','profesor','admin') NOT NULL,
+    alumnos INTEGER(10) DEFAULT NULL
 );
 
 CREATE TABLE asignature (
     id INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     skill ENUM('mates', 'castellano', 'ingles', 'valenciano', 'fisica', 'quimica', 'informatica') NOT NULL,
-    description TEXT
+    description TEXT,
+    user_id INTEGER(11) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE notas (
