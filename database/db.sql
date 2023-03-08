@@ -9,7 +9,7 @@ CREATE TABLE user (
     password VARCHAR(60) NOT NULL,
     fullname VARCHAR(100) NOT NULL,
     role ENUM('alumno','profesor','admin') NOT NULL,
-    alumnos INTEGER(10) DEFAULT NULL
+    cantidad INTEGER(10) DEFAULT NULL
 );
 
 CREATE TABLE asignature (
