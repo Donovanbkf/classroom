@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router()
 const pool = require('../config/database')
 
-router.post('/', async (req, res)=> {
+router.post('/signin', async (req, res)=> {
     const user = {
         dni: 1234,
         username: 'user1',
@@ -14,9 +14,18 @@ router.post('/', async (req, res)=> {
     res.send('lol')
 })
 
-router.get('/', async (req, res)=> {
-    console.log(await pool.query('Select * from user'))
+router.post('/login', async (req, res)=> {
+    const user = {
+        username: 'user1',
+        password: 'password',
+    }
+    console.log(await pool.query('Insert into user set ?', [user]))
     res.send('lol')
+})
+
+router.get('/', async (req, res)=> {
+    const users = await pool.query('Select * from user')
+    res.send(users)
 })
 
 module.exports = router
