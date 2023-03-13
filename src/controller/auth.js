@@ -1,20 +1,17 @@
 const pool = require('../config/database')
+const { matchedData } = require("express-validator");
 
 const signin = async (req, res)=> {
-    const user = {
-        dni: 1234,
-        username: 'user1',
-        password: 'password',
-        fullname: 'fullname',
-        role: 'admin',
-    }
-    console.log(await pool.query('Insert into user set ?', [user]))
-    res.send('lol')
+    console.log(req.body)
+    req = matchedData(req)
+    console.log(req)
+    // const userr = await pool.query('Insert into user set ?', [user])
+    res.send('user')
 }
 
 const login = async (req, res)=> {
     const user = {
-        username: 'user12',
+        username: 'user1',
         password: 'password',
     }
     const usuario = await pool.query('Select * from user where username = ?', [user.username])
