@@ -1,20 +1,20 @@
 const pool = require('../config/database')
 const { matchedData } = require("express-validator");
+const {encrypt} = require('../helpers/handleBcrypt')
 
 const signin = async (req, res)=> {
-    console.log(req.body)
     req = matchedData(req)
-    console.log(req)
-    // const userr = await pool.query('Insert into user set ?', [user])
-    res.send('user')
+    if (req.role === 'profesor'){
+        req.cantidad = 0
+    }
+    req.password = await encrypt(req.password) 
+    await pool.query('Insert into user set ?', [req])
+    res.send(req)
 }
 
 const login = async (req, res)=> {
-    const user = {
-        username: 'user1',
-        password: 'password',
-    }
-    const usuario = await pool.query('Select * from user where username = ?', [user.username])
+    req = matchedData(req)
+    const usuario = await pool.query('Select * from user where username = ?', [req.username])
     if (usuario.length > 0) {
         return res.send('logueado')
     }
@@ -24,8 +24,7 @@ const login = async (req, res)=> {
 
 const list = async (req, res)=> {
     const users = await pool.query('Select * from user')
-    console.log(rows)
-    res.send(users)
+    res.send(users[0])
 }
 
 module.exports = { signin, login, list }
