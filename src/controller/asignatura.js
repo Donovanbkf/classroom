@@ -15,11 +15,15 @@ const edit_asignatura = async (req, res)=> {
     res.send(asignatura)
 }
 
-
 const delete_asignature = async (req, res)=> {
     const {id} = req.params
     const asignatura = await pool.query('DELETE FROM asignature WHERE id = ?',[id])
     res.send(asignatura)
 }
 
-module.exports = { new_asignatura, edit_asignatura, delete_asignature }
+const list_asignature = async (req, res)=> {
+    const asignaturas = await pool.query('Select * FROM asignature')
+    res.send(asignaturas[0])
+}
+
+module.exports = { new_asignatura, edit_asignatura, delete_asignature, list_asignature }
