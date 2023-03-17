@@ -22,7 +22,7 @@ CREATE TABLE asignature (
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
-CREATE TABLE notas (
+CREATE TABLE matricula (
     user_id INTEGER(11) NOT NULL, 
     asignature_id INTEGER(11) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(id),
