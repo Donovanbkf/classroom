@@ -18,6 +18,8 @@ app.use(express.urlencoded({ extended: true})) // para los form hace que funcion
 
 //routes
 app.use('/auth',require('./routes/auth')) 
+app.use('/asignatura',require('./routes/asignatura'))
+app.use('/matricula',require('./routes/matricula'))
 app.use(require('./routes/')) 
 
 // app.use(require('./routes/links'))
