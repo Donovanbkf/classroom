@@ -17,19 +17,19 @@ module.exports = function (passport) {
       }
 
       const user = rows;
-      console.log(user);
+ 
       if (!await compare(password, user.password)) {
         return done(null, false, { message: 'Contraseña incorrecta' });
       }
 
-      return done(null, user);
+      return done(null, user.id)
     } catch (error) {
       return done(error);
     }
   }));
 
-  passport.serializeUser((user, done) => {
-      done(null, user.id);
+  passport.serializeUser((user, done) => { // lo que va a guardar passport
+    done(null, user);
   });
     
   passport.deserializeUser(async (id, done) => {
@@ -39,11 +39,11 @@ module.exports = function (passport) {
 
         if (!user) {
         return done(new Error(`Usuario con el id ${id} no encontrado`));
-        }
+        } 
 
         return done(null, user);
       } catch (error) {
           return done(error);
       }
   });
-}
+} 
