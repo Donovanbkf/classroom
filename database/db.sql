@@ -33,4 +33,4 @@ CREATE TABLE matricula (
 
 DESCRIBE user;
 DESCRIBE asignature;
-DESCRIBE notas;
+DESCRIBE matricula;
