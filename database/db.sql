@@ -19,13 +19,13 @@ CREATE TABLE asignature (
     skill ENUM('mates', 'castellano', 'ingles', 'valenciano', 'fisica', 'quimica', 'informatica') NOT NULL,
     description TEXT,
     user_id INTEGER(11) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (teacher_id) REFERENCES user(id)
 );
 
 CREATE TABLE matricula (
     user_id INTEGER(11) NOT NULL, 
     asignature_id INTEGER(11) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (student_id) REFERENCES user(id),
     FOREIGN KEY (asignature_id) REFERENCES asignature(id),
     estado ENUM('en curso','finalizada') NOT NULL,
     nota FLOAT(10)
