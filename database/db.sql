@@ -18,12 +18,12 @@ CREATE TABLE asignature (
     id INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     skill ENUM('mates', 'castellano', 'ingles', 'valenciano', 'fisica', 'quimica', 'informatica') NOT NULL,
     description TEXT,
-    user_id INTEGER(11) NOT NULL,
+    teacher_id INTEGER(11) NOT NULL,
     FOREIGN KEY (teacher_id) REFERENCES user(id)
 );
 
 CREATE TABLE matricula (
-    user_id INTEGER(11) NOT NULL, 
+    student_id INTEGER(11) NOT NULL, 
     asignature_id INTEGER(11) NOT NULL,
     FOREIGN KEY (student_id) REFERENCES user(id),
     FOREIGN KEY (asignature_id) REFERENCES asignature(id),
