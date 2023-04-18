@@ -5,4 +5,11 @@ function isAuthenticated(req, res, next) {
   res.send('No authenticate');
 }
 
-module.exports = {isAuthenticated: isAuthenticated}
+const checkRol = (rol) => (req, res, next) => {
+  if (req.user.role === rol) {
+    return next();
+  }
+  res.status(403).send('no tienes los derechos')
+};
+
+module.exports = { isAuthenticated, checkRol }
