@@ -13,6 +13,17 @@ const validateMatriculaCreate = [
     }
     return true;
   }),
+  body("student_id").exists().withMessage("student_id no recibido").notEmpty().withMessage("student_id vacío").isInt().custom(async (value, {req}) => {
+    const user = await pool.query('Select * from user where id = ?', [value]);
+    if (user.length == 0) {
+      req.status = 404
+      throw new Error(`no existe este usuario`);
+    }else if(user.role != 'alumno'){
+      req.status = 404
+      throw new Error(`este usuario no es un estudiante`);
+    }
+    return true;
+  }),
   (req, res, next) => {
     validateResult(req, res, next);
   },
@@ -29,14 +40,28 @@ const validateMatriculaEdit = [
     }
     return true;
   }),
+  body("student_id").exists().withMessage("student_id no recibido").notEmpty().withMessage("student_id vacío").isInt().custom(async (value, {req}) => {
+    const user = await pool.query('Select * from user where id = ?', [value]);
+    if (user.length == 0) {
+      req.status = 404
+      throw new Error(`no existe este usuario`);
+    }else if(user.role != 'alumno'){
+      req.status = 404
+      throw new Error(`este usuario no es un estudiante`);
+    }
+    return true;
+  }),
   param("id").exists().withMessage("id no recibido").notEmpty().withMessage("id vacío").custom(async (value, {req}) => {
     const matricula = await pool.query('Select * from matricula where id = ?', [value]);
     if (matricula.length == 0) {
       req.status = 404
       throw new Error(`Matricula actual no existe`);
-    }else if (matricula.user_id != req.user.id){
-      req.status = 403
-      throw new Error(`Matricula actual no te pertenece`);
+    }else {
+      const asignatura = await pool.query('Select * from asignature where id = ?', [matricula.asignature_id]);
+      if (asignatura.teacher_id != req.user.id){
+        req.status = 403
+        throw new Error(`matricula actual no te pertenece`);
+      }
     }
     return true;
   }), 
@@ -51,9 +76,12 @@ const validateMatriculaDelete = [
     if (matricula.length == 0) {
       req.status = 404
       throw new Error(`matricula actual no existe`);
-    }else if (matricula.user_id != req.user.id){
-      req.status = 403
-      throw new Error(`matricula actual no te pertenece`);
+    }else {
+      const asignatura = await pool.query('Select * from asignature where id = ?', [matricula.asignature_id]);
+      if (asignatura.teacher_id != req.user.id){
+        req.status = 403
+        throw new Error(`matricula actual no te pertenece`);
+      }
     }
     return true;
   }),
