@@ -3,9 +3,12 @@ const { matchedData } = require("express-validator");
 
 
 const new_asignatura = async (req, res)=> {
+    const id = req.user.id;
     req = matchedData(req)
+    req.user_id = id;
+    console.log(req)
     await pool.query('Insert into asignature set ?', [req])
-    res.send(req)
+    res.send('queee')
 }
 
 const edit_asignatura = async (req, res)=> {

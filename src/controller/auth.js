@@ -1,6 +1,7 @@
 const pool = require('../config/database')
 const { matchedData } = require("express-validator");
 const {encrypt} = require('../helpers/handleBcrypt')
+const passport = require('passport');
 
 const signin = async (req, res)=> {
     req = matchedData(req)
@@ -12,19 +13,16 @@ const signin = async (req, res)=> {
     res.send(req)
 }
 
-const login = async (req, res)=> {
-    req = matchedData(req)
-    const usuario = await pool.query('Select * from user where username = ?', [req.username])
-    if (usuario.length > 0) {
-        return res.send('logueado')
-    }
-    res.send('no logueado')
+const login = (req,res,next) => {passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/about/"
+  })(req,res,next);
 }
 
-
 const list = async (req, res)=> {
+    console.log(req.sessionID)
     const users = await pool.query('Select * from user')
-    res.send(users[0])
+    res.send(users)
 }
 
 module.exports = { signin, login, list }
